@@ -1,0 +1,641 @@
+/**************************************************************************
+*   *Debug styles
+**************************************************************************/
+/*   .viewport {
+      border: 3px solid green;
+   }
+   .viewport > .container-desktop {
+      border: 3px solid red;
+   }
+
+   div > div > div {
+      border: 3px solid yellow;
+   }
+*/
+
+
+/*      .viewport-mobile {
+         border: 3px solid red;
+      }
+
+      div > div {
+         border: 3px solid green;
+      }
+*/
+/**************************************************************************
+*   *Reset
+**************************************************************************/
+   body, div {
+      margin: 0;
+      padding: 0;
+   }
+/**************************************************************************
+*   *Global styles
+**************************************************************************/
+* {
+   box-sizing: border-box;   
+}
+
+/**************************************************************************
+*   CSS *Variables
+**************************************************************************/
+   /**************************************************************************
+   *   Desktop version: Background image and svg dimensions
+   **************************************************************************/
+   :root {
+      --viewport-height: 100vh;
+      --viewport-width: 100vw;
+   
+      /* Background image propeties */
+         --desktop-bg-width: 1600;
+         --desktop-bg-height: 1063;
+         --desktop-bg-height2width: var(--desktop-bg-height) / var(--desktop-bg-width);
+
+      /* Container for the background image and all the content */
+         --desktop-container-vertical-padding: 2rem;
+         --desktop-container-width: var(--viewport-width);
+          
+         /* Keep aspect ratio of main container as long as possible */
+         /* But its width should not exceed the --viewport-height */
+            --desktop-container-height: 
+               min(
+                  var(--viewport-height),
+                  calc(var(--viewport-width) * var(--desktop-bg-height2width))
+               );
+               
+            --desktop-container-height-minus-paddings:
+               calc(var(--desktop-container-height) - 2*var(--desktop-container-vertical-padding));
+       
+      /*////////////////////////////////////////////////////*/
+      /* Flex blocks widths ratio (they contain SVG images) */
+      /*////////////////////////////////////////////////////*/
+         --yoga-man-block-width-weight: 0.85;
+         --cute-frame-block-width-weight: 1;
+         --cute-frame-block-width-in-units: calc(var(--viewport-width) * 1/1.85);
+   }
+
+   /**************************************************************************
+   *   Mobile version
+   **************************************************************************/
+      :root {
+         --mobile-cta-area-block-height: 16.6667vh;
+
+
+         --mobile-cute-frame-block-vertical-padding: 1rem;
+         --mobile-cute-frame-block-height: calc(100vh - var(--mobile-cta-area-block-height));
+         --mobile-cute-frame-block-height-minus-paddings:
+            calc(
+               var(--mobile-cute-frame-block-height) - 2 * var(--mobile-cute-frame-block-vertical-padding)
+            );
+            
+
+       
+      }
+
+
+   /**************************************************************************
+   *   Animation intervals
+   **************************************************************************/
+   :root {
+      --move_upside_down_animation_duration: 2500ms;
+      --svg_click_animation_duration: 2000ms;
+       
+      --mobile_wing_the_emblem_animation_duration: 2500ms;
+      --mobile_svg_click_animation_duration: 1800ms;
+   }
+
+   /**************************************************************************
+   *   Mobile version
+   **************************************************************************/
+
+
+
+/**************************************************************************
+*   *Flex
+**************************************************************************/
+   /**************************************************************************
+   *   .viewport-mobile
+   **************************************************************************/
+      .viewport-mobile {
+         display: flex;
+         flex-direction: column;
+      }
+
+         .viewport-mobile > .cute-frame-block {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+         .viewport-mobile > .cta-area-block {
+            /*flex: 0 0 var(--mobile-cta-area-block-height);*/
+            flex: 0.2;
+            display: flex;
+            justify-content: center;
+            
+         }
+
+
+   /**************************************************************************
+   *   .viewport
+   **************************************************************************/
+      .viewport {
+         display: flex;
+         align-items: center;
+      }
+         .viewport > .container-desktop {
+            flex: 0 0 100%;
+            display: flex;
+         }
+            .viewport > .container-desktop > .yoga-man-block {
+               flex: var(--yoga-man-block-width-weight);
+            }
+
+            .viewport > .container-desktop > .cute-frame-block {
+               flex: var(--cute-frame-block-width-weight);
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               
+            }
+
+
+/**************************************************************************
+*   F*onts
+**************************************************************************/
+
+   /*=====================================================================
+   *  Font sizes (see font-sizes.txt for details)
+      ----------
+      (do not use CSS variables to support all the browsers :-))
+      Desktop (min-width: 640px)
+         body, text: Regular  21px
+         step: 2pt => 2/21px = 0.1rem
+         
+         heading3: bold, 1.6rem
+         small2: 0.9rem
+   ======================================================================*/
+      :root {
+         font-size: 21px; /*16px by default*/
+         font-family: serif;
+      }
+/*
+      h3 -> 1.6rem
+      h2 -> 1.7rem
+      h1 -> 1.8rem
+      
+      step equals 2pt for each new size
+      2/21 ~ 0.1
+*/      
+      h1 {
+         /* Decrease font-size by 1 step due to using of sans-serif fonts */         
+         font-size: 1.8rem;
+      }
+
+      h2 {
+         /* Decrease font-size by 1 step due to using of sans-serif fonts */         
+         font-size: 1.7rem;
+      }
+
+   /*=====================================================================
+   *  Font families, font weights
+   ======================================================================*/
+      h1,h2,h3 {
+         font-family: serif;
+      }
+
+/**************************************************************************
+*   *Width, height, margins, paddings, borders
+*************************************************************************
+   /**************************************************************************
+   *   .viewport-mobile
+   **************************************************************************/
+      .viewport-mobile {
+         height: var(--viewport-height);
+      }
+
+      .viewport-mobile > .cta-area-block {
+         padding: 0.5rem;
+      }
+
+   /**************************************************************************
+   *   .viewport
+   **************************************************************************/
+   .viewport {
+      height: var(--viewport-height);
+   }
+      .viewport > .container-desktop {
+         padding-top: var(--desktop-container-vertical-padding);
+         padding-bottom: var(--desktop-container-vertical-padding);
+         height: var(--desktop-container-height);
+      }
+
+         .viewport > .container-desktop > .yoga-man-block {
+            height: 100%;
+            padding-left: 1.3rem;
+         }
+
+         .viewport > .container-desktop > .cute-frame-block {
+            height: 100%;
+         }
+
+/**************************************************************************
+*   Borders, *colors, text-align, line-height etc
+**************************************************************************/
+   .viewport > .container-desktop > .cute-frame-block > .fitted-svg-container
+      > .random-post-container h2,
+   {
+      margin-top: 0;
+   }
+
+   .viewport-mobile > .cute-frame-block > .fitted-svg-container
+      > .random-post-container h2
+   {
+      margin-top: 0;
+      text-align: center;
+   }
+
+
+
+
+
+/**************************************************************************
+*   *Backgrounds and background images
+**************************************************************************/
+   /**************************************************************************
+   *   .viewport
+   **************************************************************************/
+      .viewport {
+         background: 
+            linear-gradient(180deg, rgba(231,209,186,1) 0%, rgba(207,167,130,1) 100%);
+      }
+
+         .viewport > .container-desktop {
+            background-image: url('assets/images/bitmap/c/taj-mahal-orange-blur.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% auto;
+         }
+
+   /**************************************************************************
+   *   .viewport-mobile
+   **************************************************************************/
+      .viewport-mobile {
+         background: 
+            linear-gradient(180deg, rgba(231,209,186,1) 0%, rgba(207,167,130,1) 100%);
+      }
+
+      .viewport-mobile > .cute-frame-block {
+         /*
+         [!] Shorthand for background (it also resets not-defined values to ther defaults)
+         background-image background-position / background-size background-repeat background-origin background-clip background-attachment background-color
+         */
+         background:
+            url('assets/images/bitmap/c/taj-mahal-orange-blur.png') center center / auto 100%  no-repeat;
+      }
+
+
+
+/**************************************************************************
+*   *Positioning contexts and dimensions
+**************************************************************************/
+/*
+   It is a very tricky thing actually! But it is compatible  with  CSS Grid module.
+   We could use a padding-bottom trick to maximize the browser support instead
+   The problem is to maintaint an aspect ratio of div according to SVG viewbox property
+   https://codeburst.io/keeping-aspect-ratio-with-html-and-no-padding-tricks-40705656808b
+   https://css-tricks.com/aspect-ratios-svg/
+*/
+   /**************************************************************************
+   *   Desktop version
+   **************************************************************************/
+      .viewport > .container-desktop > .cute-frame-block > .fitted-svg-container {
+
+         width: calc(var(--desktop-container-height-minus-paddings)
+               * var(--viewbox-width) / var(--viewbox-height));
+               
+         display: grid;
+         
+         position: relative;
+      }
+
+      .viewport > .container-desktop > .cute-frame-block > .fitted-svg-container > * {
+         grid-area: 1 / 1 / 2 / 2;
+      }
+
+      .viewport > .container-desktop > .cute-frame-block > .fitted-svg-container
+         > .random-post-container
+      {
+         position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+         margin: 1.2rem;
+         overflow: auto;
+      }
+
+   /**************************************************************************
+   *   Mobile version
+   **************************************************************************/
+      .viewport-mobile > .cute-frame-block > .fitted-svg-container {
+         width: calc(var(--mobile-cute-frame-block-height-minus-paddings)
+               * var(--viewbox-width) / var(--viewbox-height));
+         display: grid;
+         position: relative;
+      }
+      .viewport-mobile > .cute-frame-block > .fitted-svg-container > * {
+         grid-area: 1 / 1 / 2 / 2;
+      }
+
+      .viewport-mobile > .cute-frame-block > .fitted-svg-container
+         > .random-post-container
+      {
+         position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+         margin: 1.2rem;
+         overflow: auto;
+      }
+
+
+
+
+/**************************************************************************
+*   *SVG
+**************************************************************************/
+   /**************************************************************************
+   *   Styles for *JS interactions
+   **************************************************************************/
+      .viewport > .container-desktop > .yoga-man-block > svg.data-requesting,
+      .viewport-mobile > .cta-area-block > svg.data-requesting
+      {
+         mix-blend-mode: normal;
+      }
+
+      .viewport > .container-desktop > .cute-frame-block
+         > .fitted-svg-container > svg .bodhi-tree-dark-green.data-requesting
+         /* ;-) */
+/*      ,.viewport-mobile > .cute-frame-block > .fitted-svg-container
+         > svg .bodhi-tree-dark-green.data-requesting
+*/      
+      {
+         opacity: 35%;
+      }
+
+      .viewport > .container-desktop > .cute-frame-block > .fitted-svg-container
+         > .random-post-container.data-requesting,
+      .viewport-mobile > .cute-frame-block > .fitted-svg-container
+         > .random-post-container.data-requesting
+      {
+         opacity: 0;
+      }
+
+   /**************************************************************************
+   *   Desktop version
+   **************************************************************************/
+      .viewport > .container-desktop > .yoga-man-block > svg
+      {
+         cursor: pointer;
+      }
+
+      .viewport > .container-desktop > .yoga-man-block > svg
+      {
+         display: block;
+         height: 100%;
+         width: 100%;
+         
+         mix-blend-mode: multiply;
+      }
+
+      .viewport > .container-desktop > .cute-frame-block
+         > .fitted-svg-container > svg .bodhi-tree-dark-green,
+      .viewport-mobile > .cute-frame-block > .fitted-svg-container
+         > svg .bodhi-tree-dark-green
+      
+      {
+         opacity: 0;
+      }
+
+   /**************************************************************************
+   *   Mobile version
+   **************************************************************************/
+      .viewport-mobile > .cta-area-block > svg
+      {
+         cursor: pointer;
+      }
+
+      .viewport-mobile > .cta-area-block > svg {
+         display: block;
+         height: var(--mobile-cta-area-block-height);
+         mix-blend-mode: multiply;
+      }
+
+/**************************************************************************
+*   *Animations
+**************************************************************************/
+   /**************************************************************************
+   *   Desktop screen animations
+   **************************************************************************/
+      /**************************************************************************
+      *   DOMContentLoaded
+      **************************************************************************/
+         .viewport > .container-desktop > .yoga-man-block > svg.move-upside-down-page-load {
+            animation: move_upside_down_animation;
+            animation-duration: var(--move_upside_down_animation_duration);
+         }
+
+         @keyframes move_upside_down_animation {
+            0% {
+               transform: translateY(0);
+            }
+            50% {
+               transform: translateY(-2rem);
+            }
+            100% {
+               transform: translateY(0);
+            }
+         }
+      /**************************************************************************
+      *   click
+      **************************************************************************/
+         .viewport > .container-desktop > .yoga-man-block > svg.was-clicked {
+            animation: svg_click_animation;
+            animation-duration: var(--svg_click_animation_duration);
+         }
+
+         @keyframes svg_click_animation {
+            from {
+               transform: scale(1);
+            }
+
+            50% {
+               transform: scale(1.2);
+            }
+
+            to {
+               transform: scale(1);         
+            }
+         }
+
+/*   
+Algorithm to rotate:
+-------------------
+1) Rotate it in SVG editor
+2) Transformation:  transform="rotate(90,999.37561,998.80059)"
+3) View box:   viewBox="0 0 1202.0425 1684.0249"
+4) New rotation center in CSS: 
+   999.37561 / 1202.0425 = 0.8313978998246735 = 83.1398%
+   998.80059 / 1684.0249 = 0.5931032195545327 = 59.3103%
+*/
+         .viewport > .container-desktop > .yoga-man-block > svg .stuff-to-rotate-around-athlete {
+            transform-origin: 83.1398% 59.3103%;      
+         }
+
+         .viewport > .container-desktop > .yoga-man-block
+            > svg .stuff-to-rotate-around-athlete.rotate 
+         {
+            animation: rotate_animation;
+            animation-duration: var(--svg_click_animation_duration);
+         }
+
+         @keyframes rotate_animation {
+            from {
+               transform: rotate(0deg);
+            }
+            50% {
+            }
+            to {
+               transform: rotate(360deg);
+            }
+            
+         }
+
+   /**************************************************************************
+   *   Mobile screen animations
+   **************************************************************************/
+      /**************************************************************************
+      *   Variables presets
+      **************************************************************************/
+         .viewport-mobile > .cta-area-block > svg {
+
+            --rotCXPercent: calc(var(--rotCX)/var(--viewboxW)*100%);
+            --rotCYPercent: calc(var(--rotCY)/var(--viewboxH)*100%);
+
+            overflow: visible;
+         }
+
+      /**************************************************************************
+      *   DOMContentLoaded
+      **************************************************************************/
+         /*////////////////////////
+         // .text-group-random-post
+         //////////////////////////*/
+         .viewport-mobile > .cta-area-block > svg .text-group-random-post.wing-emblem-page-load {
+            transform-origin: var(--rotCXPercent) var(--rotCYPercent);
+            
+            animation: wing_the_emblem_animation;
+            animation-duration: var(--mobile_wing_the_emblem_animation_duration);
+         }
+
+         /*//////////////
+         // .group-orbits
+         /////////////////*/
+         .viewport-mobile > .cta-area-block > svg .group-orbits.wing-emblem-page-load {
+            transform-origin: var(--rotCXPercent) var(--rotCYPercent);
+            
+            animation: wing_the_emblem_animation;
+            animation-duration: var(--mobile_wing_the_emblem_animation_duration);
+         }
+
+         /*/////////////////////////////////////////////////////////////////////
+         // .clippath-for-orange-orbit_ellipse,.clippath-for-orange-text_ellipse
+         ///////////////////////////////////////////////////////////////////////*/
+         .viewport-mobile > .cta-area-block > svg .clippath-for-orange-orbit_ellipse.wing-emblem-page-load,
+         .viewport-mobile > .cta-area-block > svg .clippath-for-orange-text_ellipse.wing-emblem-page-load
+          {
+            transform-origin: var(--rotCXPercent) var(--rotCYPercent);
+                        
+            animation: wing_the_emblem_inverse_transformation_animation;
+            animation-duration: var(--mobile_wing_the_emblem_animation_duration);
+         }
+
+         @keyframes wing_the_emblem_animation {
+            25% {
+               transform: rotate(10deg);
+            }
+            75% {
+               transform: rotate(-10deg);
+            }
+         }
+
+         @keyframes wing_the_emblem_inverse_transformation_animation {
+            25% {
+               transform: rotate(-10deg);
+            }
+            75% {
+               transform: rotate(10deg);
+            }
+         }
+
+      /**************************************************************************
+      *   click
+      **************************************************************************/
+         .viewport-mobile > .cta-area-block > svg.was-clicked {
+            animation: mobile_svg_click_scale_animation;
+            animation-duration: var(--mobile_svg_click_animation_duration);
+         }
+
+         .viewport-mobile > .cta-area-block > svg .ellipse-green.was-clicked,
+         .viewport-mobile > .cta-area-block > svg .clippath-for-orange-orbit_ellipse.was-clicked,
+         .viewport-mobile > .cta-area-block > svg .clippath-for-orange-text_ellipse.was-clicked
+          {
+            transform-origin: var(--rotCXPercent) var(--rotCYPercent);
+            
+            animation: mobile_svg_click_animation;
+            animation-duration: var(--mobile_svg_click_animation_duration);
+         }
+
+         @keyframes mobile_svg_click_animation {
+            50% {
+               /* Calculated radiuses using Inkscape */
+               rx: 320;
+               ry: 234;
+            }
+         }
+
+         @keyframes mobile_svg_click_scale_animation {
+            50% {
+               transform: scale(1.25);
+            }
+         }
+
+
+
+
+
+
+/**************************************************************************
+*   Media *queries
+**************************************************************************/
+   @media (min-width: 640px) {
+      :root {
+         --IS_MOBILE_VIEW: 0;
+      }
+
+      .viewport {
+         display: block;
+      }
+      .viewport-mobile {
+         display: none;
+      }
+   }
+   @media (max-width: 640px) {
+      :root {
+         --IS_MOBILE_VIEW: 1;
+      }
+
+      .viewport {
+         display: none;
+      }
+      .viewport-mobile {
+         display: block;
+      }
+   }
+
+
